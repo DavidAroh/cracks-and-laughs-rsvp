@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import EventQr from "./EventQr";
 import RsvpTable from "./RsvpTable";
 import ActiveToggle from "./ActiveToggle";
@@ -29,7 +30,20 @@ export default async function EventDetailPage({
     .eq("event_id", event.id)
     .order("created_at", { ascending: false });
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const headersList = await headers();
+  const host = headersList.get("x-forwarded-host") || headersList.get("host");
+  const proto = headersList.get("x-forwarded-proto") || "https";
+
+  const rawSiteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (host ? `${proto}://${host}` : "") ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "") ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    "http://localhost:3000";
+
+  const siteUrl = rawSiteUrl.replace(/\/+$/, "");
   const rsvpUrl = `${siteUrl}/rsvp/${event.slug}`;
 
   return (
