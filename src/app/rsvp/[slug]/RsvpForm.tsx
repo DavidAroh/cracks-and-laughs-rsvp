@@ -161,6 +161,24 @@ export default function RsvpForm({
         </div>
 
         <div className="flex flex-col gap-1.5">
+          <label htmlFor="birthday" className="kicker">
+            Birthday
+          </label>
+          <input
+            id="birthday"
+            name="birthday"
+            type="date"
+            required
+            autoComplete="bday"
+            aria-describedby="birthday-help"
+            className="field"
+          />
+          <p id="birthday-help" className="text-xs text-cream-dim/65">
+            We&apos;ll use this to celebrate you at the show.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
           <label htmlFor="phone" className="kicker">
             Phone number
           </label>
@@ -171,19 +189,6 @@ export default function RsvpForm({
             required
             autoComplete="tel"
             placeholder="0803 000 0000"
-            className="field"
-          />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="birthday" className="kicker">
-            Birthday
-          </label>
-          <input
-            id="birthday"
-            name="birthday"
-            type="date"
-            required
             className="field"
           />
         </div>

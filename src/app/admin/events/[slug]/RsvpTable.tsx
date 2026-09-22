@@ -119,7 +119,7 @@ export default function RsvpTable({
                   <td className="px-4 py-3">
                     {r.source ? (
                       <span className="rounded-sm border border-gold/25 bg-gold/10 px-2 py-0.5 text-xs font-medium text-gold">
-                        {capitalize(r.source)}
+                        <span className="whitespace-nowrap">{capitalize(r.source)}</span>
                       </span>
                     ) : (
                       <span className="text-cream-dim/50">—</span>
