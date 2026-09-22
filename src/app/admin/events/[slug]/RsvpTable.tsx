@@ -5,6 +5,7 @@ type Rsvp = {
   name: string;
   email: string;
   phone: string;
+  birthday: string | null;
   source: string | null;
   created_at: string;
 };
@@ -33,11 +34,12 @@ export default function RsvpTable({
   eventName: string;
 }) {
   function exportCsv() {
-    const header = ["Name", "Email", "Phone", "Heard Via", "Submitted At"];
+    const header = ["Name", "Email", "Phone", "Birthday", "Heard Via", "Submitted At"];
     const rows = rsvps.map((r) => [
       r.name,
       r.email,
       r.phone,
+      r.birthday || "",
       r.source ? capitalize(r.source) : "",
       formatSubmitted(r.created_at),
     ]);
@@ -86,6 +88,7 @@ export default function RsvpTable({
                 <th className="kicker !text-[0.55rem] px-4 py-3">Name</th>
                 <th className="kicker !text-[0.55rem] px-4 py-3">Email</th>
                 <th className="kicker !text-[0.55rem] px-4 py-3">Phone</th>
+                <th className="kicker !text-[0.55rem] px-4 py-3">Birthday</th>
                 <th className="kicker !text-[0.55rem] px-4 py-3">Heard via</th>
                 <th className="kicker !text-[0.55rem] px-4 py-3">Submitted</th>
               </tr>
@@ -110,10 +113,13 @@ export default function RsvpTable({
                   <td className="px-4 py-3 tab-nums text-cream-dim">
                     {r.phone}
                   </td>
+                  <td className="px-4 py-3 tab-nums text-cream-dim">
+                    {r.birthday ? new Date(`${r.birthday}T00:00:00`).toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }) : "—"}
+                  </td>
                   <td className="px-4 py-3">
                     {r.source ? (
                       <span className="rounded-sm border border-gold/25 bg-gold/10 px-2 py-0.5 text-xs font-medium text-gold">
-                        {capitalize(r.source)}
+                        <span className="whitespace-nowrap">{capitalize(r.source)}</span>
                       </span>
                     ) : (
                       <span className="text-cream-dim/50">—</span>

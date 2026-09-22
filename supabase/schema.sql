@@ -50,11 +50,13 @@ create table if not exists rsvps (
   name       text not null,
   email      text not null,
   phone      text not null,
+  birthday   date,
   source     text,
   created_at timestamptz not null default now()
 );
 
--- Ensure 'source' column exists if table was created previously without it
+-- Ensure previous/older columns exist if the table was created without them
+alter table rsvps add column if not exists birthday date;
 alter table rsvps add column if not exists source text;
 
 -- Index for event lookup performance
