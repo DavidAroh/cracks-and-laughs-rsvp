@@ -26,12 +26,26 @@ export async function submitRsvp(
     return { ok: false, error: "Enter a valid email address." };
   }
 
-  const birthdayDate = new Date(`${birthday}T00:00:00`);
-  if (Number.isNaN(birthdayDate.getTime())) {
+  const birthdayMatch = /^(\d{4})-(\d{2})-(\d{2})$/;
+  const birthdayParts = birthday.match(birthdayMatch);
+  if (!birthdayParts) {
     return { ok: false, error: "Enter a valid birthday." };
   }
 
-  if (birthdayDate > new Date()) {
+  const year = Number(birthdayParts[1]);
+  const month = Number(birthdayParts[2]);
+  const day = Number(birthdayParts[3]);
+  const birthdayDate = new Date(Date.UTC(year, month - 1, day));
+
+  if (
+    birthdayDate.getUTCFullYear() !== year ||
+    birthdayDate.getUTCMonth() !== month - 1 ||
+    birthdayDate.getUTCDate() !== day
+  ) {
+    return { ok: false, error: "Enter a valid birthday." };
+  }
+
+  if (birthdayDate > new Date(Date.now())) {
     return { ok: false, error: "Birthday cannot be in the future." };
   }
 
