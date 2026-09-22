@@ -176,6 +176,19 @@ export default function RsvpForm({
         </div>
 
         <div className="flex flex-col gap-1.5">
+          <label htmlFor="birthday" className="kicker">
+            Birthday
+          </label>
+          <input
+            id="birthday"
+            name="birthday"
+            type="date"
+            required
+            className="field"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
           <label htmlFor="source" className="kicker">
             Where did you hear about this event?
           </label>

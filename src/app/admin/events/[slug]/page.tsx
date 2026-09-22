@@ -26,7 +26,7 @@ export default async function EventDetailPage({
 
   const { data: rsvps } = await supabase
     .from("rsvps")
-    .select("id, name, email, phone, source, created_at")
+    .select("id, name, email, phone, birthday, source, created_at")
     .eq("event_id", event.id)
     .order("created_at", { ascending: false });
 
